@@ -50,7 +50,7 @@
 
 ### 9. Algorithm Selection & Model Training
 - **Algorithm Selection**: Choose appropriate ML algorithm(s)
-- **Hyperparameter Tuning**: Optimize model parameters
+- **Hyperparameter Tuning**: Optimize model parameters for better results.
 - **Model Training**: Train the model on training dataset
 - **Cross-Validation**: Validate model performance across data splits
 
