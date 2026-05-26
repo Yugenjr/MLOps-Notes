@@ -149,5 +149,4 @@ gh pr view
 ```
 
 ---
-
 **When to use GitHub Flow:** Continuous deployment, web apps, small-to-medium teams, rapid iteration cycles.
