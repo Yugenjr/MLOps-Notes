@@ -1,0 +1,76 @@
+# GitLab Flow
+
+## Overview
+GitLab Flow combines GitHub Flow simplicity with Git Flow versioning. It uses environment branches (production, staging, pre-production) and merge requests for controlled releases.
+
+## Key Concepts
+- **Feature branches** - Short-lived branches for features
+- **Environment branches** - `production`, `staging`, `pre-production`
+- **Merge Requests** - Code review mechanism (GitLab's PR equivalent)
+- **Version control** - Tags for releases
+- **Continuous deployment** - Auto-deploy to environments after merge
+
+## Workflow Diagram
+
+```mermaid
+graph LR
+    A["Feature Branch"] -->|Create MR| B["Code Review"]
+    B -->|Approved| C["Merge to main"]
+    C -->|Auto Deploy| D["Staging"]
+    D -->|Tests Pass| E["Merge to Production"]
+    E -->|Deploy| F["Production"]
+    F -->|Tag Release| G["v1.0.0"]
+    style A fill:#87CEEB
+    style G fill:#90EE90
+```
+
+## GitLab Flow vs Other Strategies
+
+| Feature | GitLab Flow | GitHub Flow | Git Flow |
+|---------|-------------|------------|----------|
+| Environment Branches | ✅ Yes | ❌ No | ❌ No |
+| Merge Requests | ✅ Yes | ✅ Yes | ✅ Yes |
+| Release Branches | ✅ Yes | ❌ No | ✅ Yes |
+| Staging Environment | ✅ Yes | ⚠️ Optional | ⚠️ Optional |
+| Multiple Versions | ✅ Yes | ❌ No | ✅ Yes |
+
+## Git Commands
+
+```bash
+# Create feature branch
+git checkout -b feature/new-feature
+
+# Push and create merge request
+git push origin feature/new-feature
+
+# Merge to main (via GitLab UI)
+# Auto-deploys to staging
+
+# Promote to production
+git checkout production
+git merge main
+git push origin production
+# Auto-deploys to production
+
+# Create release tag
+git tag -a v1.0.0 -m "Release version 1.0.0"
+git push origin v1.0.0
+```
+
+## Best Practices
+✅ Keep feature branches short-lived (1-2 days)
+✅ Use descriptive merge request titles
+✅ Run CI/CD tests automatically
+✅ Require approvals before merge
+✅ Use environment-specific configurations
+✅ Tag releases for version tracking
+
+## When to Use
+- Projects needing staging environments
+- Teams using GitLab CI/CD
+- Multi-environment deployments
+- Teams wanting GitHub Flow + versioning
+- Applications requiring release management
+
+---
+**Ideal for:** GitLab users, staged deployments, release management, and balanced simplicity with version control.

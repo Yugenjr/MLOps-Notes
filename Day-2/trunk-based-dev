@@ -1,0 +1,200 @@
+# Trunk-Based Development
+
+## Overview
+Trunk-Based Development (TBD) is a version control strategy where developers integrate code directly into a single main branch (trunk/main) multiple times per day. It minimizes long-lived branches and emphasizes continuous integration.
+
+## Core Principles
+1. **Single source of truth** - `main` branch is always in working state
+2. **Short-lived branches** - Features merged within 1-2 days max
+3. **Frequent commits** - Push to trunk multiple times daily
+4. **Feature flags** - Control feature visibility without branches
+5. **Continuous testing** - Automated tests on every commit
+6. **Immediate feedback** - Catch issues quickly
+
+## Trunk-Based Development Workflow
+
+```mermaid
+graph LR
+    A["Trunk/Main<br/>Always Deployable"] -->|Check out| B["Local Dev"]
+    B -->|Small Changes| C["Commit & Push"]
+    C -->|CI Tests| D["Auto Tests Run"]
+    D -->|Pass| A
+    D -->|Fail| E["Fix Issues"]
+    E -->|Push Fix| C
+    A -->|Feature Flags| F["Deploy to Prod<br/>Gradual Rollout"]
+    style A fill:#90EE90
+    style F fill:#FFB6C6
+```
+
+## Key Characteristics
+
+| Aspect | Trunk-Based Dev |
+|--------|-----------------|
+| **Main Branch** | Always production-ready |
+| **Branch Duration** | < 1 day (ideally hours) |
+| **Commit Frequency** | Multiple times per day |
+| **Code Review** | Pre-commit or post-merge |
+| **CI/CD** | Mandatory & automated |
+| **Testing** | Extensive (unit, integration) |
+| **Feature Control** | Feature flags/toggles |
+
+## Implementation Strategies
+
+### 1. Direct Commits to Main
+```bash
+git checkout main
+git pull origin main
+# Make small changes
+git add .
+git commit -m "feat: add user profile endpoint"
+git push origin main
+```
+
+### 2. Short-Lived Feature Branches
+```bash
+git checkout -b feature/quick-fix
+# Work for hours (not days)
+git commit -m "fix: memory leak in cache"
+git push origin feature/quick-fix
+# Merge immediately via fast-forward
+```
+
+### 3. Feature Flags for Incomplete Features
+```javascript
+if (featureFlags.isEnabled('newPaymentSystem')) {
+    // Use new payment system
+    return newPaymentProcessor();
+} else {
+    // Use existing system
+    return oldPaymentProcessor();
+}
+```
+
+## Comparison with Other Strategies
+
+```mermaid
+graph TD
+    A["Branching Strategies"]
+    A -->|Frequent Integration| B["Trunk-Based Development"]
+    A -->|Simple Workflow| C["GitHub Flow"]
+    A -->|Complex Release| D["Git Flow"]
+    
+    B -->|Pros| B1["Fast Feedback<br/>Low Merge Conflicts<br/>Scalable<br/>Continuous Deployment"]
+    B -->|Cons| B2["Requires Strong CI/CD<br/>Team Discipline<br/>Complex Feature Flags"]
+    
+    C -->|Pros| C1["Easy to Learn<br/>Great for Teams<br/>Clear Review Process"]
+    C -->|Cons| C2["Slower Integration<br/>More PR Management"]
+    
+    D -->|Pros| D1["Multiple Releases<br/>Version Control<br/>Hotfix Management"]
+    D -->|Cons| D2["Complex<br/>Long-Lived Branches<br/>Merge Conflicts"]
+```
+
+## Release & Deployment
+
+```mermaid
+sequenceDiagram
+    Developer->>Trunk: Commit code (1-2 per day)
+    Trunk->>CI/CD: Trigger automated tests
+    CI/CD->>CI/CD: Run full test suite
+    CI/CD->>Trunk: Mark as green
+    DevOps->>Staging: Deploy from trunk
+    Staging->>Staging: Smoke tests
+    DevOps->>Production: Deploy trunk version
+    Production->>Users: Feature flag controls rollout
+    Users->>Feedback: Monitor metrics
+```
+
+## Feature Flags Pattern
+
+```bash
+# Feature flag structure
+{
+  "features": {
+    "newPaymentSystem": {
+      "enabled": true,
+      "rolloutPercentage": 25,
+      "targetUsers": ["beta-testers"]
+    },
+    "darkMode": {
+      "enabled": true,
+      "rolloutPercentage": 100
+    }
+  }
+}
+```
+
+## Best Practices
+
+✅ **DO:**
+- Commit small, logical changes
+- Write meaningful commit messages
+- Ensure all tests pass before push
+- Use feature flags for incomplete work
+- Communicate with team on what you're doing
+- Deploy frequently
+
+❌ **DON'T:**
+- Keep branches longer than 1-2 days
+- Commit large, untested changes
+- Ignore CI/CD pipeline failures
+- Add commented-out code
+- Merge without running tests
+- Leave feature flags permanently
+
+## Required Infrastructure
+
+```mermaid
+graph LR
+    A["Trunk-Based Dev"] -->|Requires| B["Automated Testing"]
+    A -->|Requires| C["Continuous Integration"]
+    A -->|Requires| D["Feature Flags"]
+    A -->|Requires| E["Monitoring & Alerts"]
+    B -->|Unit Tests<br/>Integration Tests| B
+    C -->|Auto Deploy<br/>Pipeline| C
+    D -->|Gradual Rollout<br/>Kill Switches| D
+    E -->|Error Tracking<br/>Performance| E
+```
+
+## When to Use Trunk-Based Development
+
+| Scenario | Suitable? |
+|----------|-----------|
+| Small, co-located teams | ✅ Yes |
+| Microservices architecture | ✅ Yes |
+| Continuous deployment needs | ✅ Yes |
+| High velocity development | ✅ Yes |
+| Large distributed teams | ⚠️ Possible (with discipline) |
+| Multiple product versions | ❌ Not ideal |
+| Legacy codebase | ⚠️ Challenging |
+
+## Common Git Commands
+
+```bash
+# Create short-lived feature branch
+git checkout -b feature/endpoint
+
+# Commit frequently
+git add .
+git commit -m "feat: add validation"
+
+# Push to origin
+git push origin feature/endpoint
+
+# Create PR for review (optional)
+gh pr create --title "Add validation" --body "Fixes #123"
+
+# Merge and delete branch
+gh pr merge --delete-branch
+```
+
+## Metrics to Track
+
+- **Integration frequency** - Commits per day
+- **Lead time** - Time from commit to production
+- **Deployment frequency** - Releases per day
+- **Change failure rate** - % of deployments causing issues
+- **Mean time to recovery** - Time to fix production issues
+
+---
+
+**Best For:** DevOps-mature teams, continuous deployment, microservices, rapid iteration, and organizations valuing speed and feedback.
