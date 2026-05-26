@@ -186,9 +186,7 @@ gh pr create --title "Add validation" --body "Fixes #123"
 # Merge and delete branch
 gh pr merge --delete-branch
 ```
-
 ## Metrics to Track
-
 - **Integration frequency** - Commits per day
 - **Lead time** - Time from commit to production
 - **Deployment frequency** - Releases per day
@@ -196,5 +194,4 @@ gh pr merge --delete-branch
 - **Mean time to recovery** - Time to fix production issues
 
 ---
-
 **Best For:** DevOps-mature teams, continuous deployment, microservices, rapid iteration, and organizations valuing speed and feedback.
