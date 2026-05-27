@@ -1,0 +1,28 @@
+# Docker Images vs Docker Containers
+
+## Overview
+
+The primary difference between a Docker image and a container is that an image is a **static, read-only template** (the blueprint), while a container is a **live, running instance** (the house built from the blueprint).
+---
+
+## Docker Images: The Blueprint
+
+A Docker image is an **immutable (unchangeable) file** that contains the application code, libraries, dependencies, and environment variables needed to run software.
+
+### Key Characteristics:
+
+- **Layered Structure**: Images are built in layers. Each instruction in a Dockerfile (like `RUN` or `COPY`) creates a new read-only layer.
+- **Portability**: Because they include everything required to run, images ensure an application works identically across development, testing, and production environments.
+- **Storage**: Images are stored in registries like Docker Hub, where they can be shared and downloaded.
+
+---
+
+## Docker Containers: The Running Instance
+
+A container is what you get when you execute a Docker image. It is a **lightweight, isolated process** that runs on the host operating system's kernel.
+
+### Key Characteristics:
+
+- **Read-Write Layer**: When a container starts, Docker adds a thin, temporary "writable layer" on top of the read-only image layers. Any changes made—like creating new files—happen only in this layer.
+- **Ephemeral Nature**: Containers are designed to be temporary. If you delete a container, any data stored in its writable layer is lost unless saved to Docker Volumes.
+- **Isolation**: Each container runs in its own isolated environment, separated from other containers and the host system.
