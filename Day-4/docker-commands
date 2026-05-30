@@ -1,0 +1,20 @@
+Common Docker commands (concise reference)
+
+- `docker --version`: show Docker version.
+- `docker pull <image>`: download image from registry.
+- `docker build -t <name>:<tag> .`: build image from Dockerfile.
+- `docker images`: list local images.
+- `docker run -it --rm -p <host>:<container> <image>`: run container interactively and remove on exit.
+- `docker ps`: list running containers.
+- `docker ps -a`: list all containers (including stopped).
+- `docker stop <container>`: stop a running container.
+- `docker rm <container>`: remove a stopped container.
+- `docker logs <container>`: show container logs.
+- `docker exec -it <container> <cmd>`: run a command inside a running container.
+- `docker rmi <image>`: remove a local image.
+- `docker system prune -a`: clean unused images, containers, networks (use with caution).
+- `docker-compose up -d`: start services defined in `docker-compose.yml` (detached).
+- `docker-compose down`: stop and remove compose services.
+
+Tip: prefer small, single-purpose images and pin image tags for reproducibility.
+

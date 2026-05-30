@@ -1,0 +1,13 @@
+Docker packages applications into lightweight, reproducible containers that run consistently across environments.
+
+- Portability: bundle app + dependencies to run anywhere.
+- Isolation: separate apps and dependencies from the host.
+- Reproducibility: consistent dev, test, and production environments.
+- Resource-efficient: lighter than full virtual machines.
+- CI/CD friendly: stable builds and predictable deployments.
+- Scalability: easy to replicate and orchestrate with containers.
+- Faster onboarding: share images instead of recreating environments.
+- Ecosystem: registries, tooling, and orchestration (e.g., Kubernetes).
+
+Bottom line: Docker simplifies building, shipping, and running applications reliably.
+
